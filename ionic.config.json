@@ -1,0 +1,7 @@
+{
+  "name": "eve-music",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
