@@ -7,7 +7,7 @@ import {
 } from '@angular/router';
 import { Observable } from 'rxjs';
 import { Router } from '@angular/router';
-import { Storage } from '@ionic/storage';
+import { Storage } from '@ionic/storage-angular';
 @Injectable({
   providedIn: 'root',
 })
