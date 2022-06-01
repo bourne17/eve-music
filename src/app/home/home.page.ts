@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { EvyMusicService } from '../services/evy-music.service';
-import {SongsModalPage} from '../songs-modal/songs-modal.page';
+import { SongsModalPage } from '../songs-modal/songs-modal.page';
 @Component({
   selector: 'app-home',
   templateUrl: 'home.page.html',
@@ -20,8 +20,12 @@ export class HomePage {
   songs: any[] = [];
   albums: any[] = [];
   artists: any[] = [];
-
-  constructor(private musicService: EvyMusicService, private modalController: ModalController) {}
+  song: any = {};
+  currentSong: any={};
+  constructor(
+    private musicService: EvyMusicService,
+    private modalController: ModalController
+  ) {}
 
   ionViewDidEnter() {
     this.musicService.getNewReleases().then((newReleases) => {
@@ -36,15 +40,30 @@ export class HomePage {
     });
   }
 
-  async showSongs(artist)
-  {
-    const songs=await this.musicService.getArtistTopTracks(artist.id);
-    const modal=await this.modalController.create({
+  async showSongs(artist) {
+    const songs = await this.musicService.getArtistTopTracks(artist.id);
+    const modal = await this.modalController.create({
       component: SongsModalPage,
       componentProps: {
-        songs: songs.track,
-        artist:artist.name
-      }
+        songs: songs.tracks,
+        artist: artist.name,
+      },
     });
+
+    modal.onDidDismiss().then((dataRetuned) => {
+      this.song = dataRetuned.data;
+    });
+
+    return await modal.present();
+  }
+
+  play() {
+    this.currentSong=new Audio(this.song.preview_url);
+    this.currentSong.play();
+    this.song.playing = true;
+  }
+  pause() {
+    this.currentSong.pause();
+    this.song.playing = false;
   }
 }
