@@ -7,7 +7,7 @@ import {
 } from '@angular/forms';
 import { AuthenticateService } from '../services/authenticate.service';
 import { NavController } from '@ionic/angular';
-import { Storage } from '@ionic/storage-angular';
+import { Storage } from '@ionic/storage';
 
 @Component({
   selector: 'app-login',

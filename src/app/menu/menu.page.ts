@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MenuController, NavController } from '@ionic/angular';
-import { Storage } from '@ionic/storage-angular';
+import { Storage } from '@ionic/storage';
 
 @Component({
   selector: 'app-menu',

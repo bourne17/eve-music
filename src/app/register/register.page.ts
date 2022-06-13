@@ -6,10 +6,10 @@ import {
   RequiredValidator,
   Validators,
 } from '@angular/forms';
-import { AuthenticateService } from '../services/authenticate.service';
 import { NavController } from '@ionic/angular';
-import { Storage } from '@ionic/storage-angular';
+
 import { fromEventPattern } from 'rxjs';
+import { CrudserviceService } from '../services/crudservice.service';
 
 @Component({
   selector: 'app-register',
@@ -48,9 +48,8 @@ export class RegisterPage implements OnInit {
   errorMessage = '';
   constructor(
     private formBuilder: FormBuilder,
-    private authService: AuthenticateService,
     private navCtrl: NavController,
-    private storage: Storage
+    private crudService: CrudserviceService
   ) {
     this.registerForm = this.formBuilder.group({
       email: new FormControl(
@@ -75,12 +74,19 @@ export class RegisterPage implements OnInit {
     });
   }
   async ngOnInit() {
-    await this.storage.create();
+    //await this.storage.create();
   }
-  register(userData) {
-    this.authService.registerUser(userData).then(() => {
-      this.navCtrl.navigateBack('/login');
-    });
+   register(userData) {
+      this.crudService
+      .addItem(
+        this.registerForm.value.nombre,
+        this.registerForm.value.apellido,
+        this.registerForm.value.email,
+        this.registerForm.value.password
+      );
+
+        this.navCtrl.navigateBack('/login');
+
   }
   goToLogin() {
     this.navCtrl.navigateBack('/login');
